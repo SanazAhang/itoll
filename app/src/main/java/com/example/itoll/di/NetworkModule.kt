@@ -1,7 +1,7 @@
 package com.example.itoll.di
 
 import com.example.itoll.BuildConfig
-import com.example.itoll.data.api.Api
+import com.example.itoll.data.api.UserApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +18,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun rocketAPI(retrofit: Retrofit): Api =
-        retrofit.create(Api::class.java)
+    fun rocketAPI(retrofit: Retrofit): UserApi =
+        retrofit.create(UserApi::class.java)
 
 
     @Provides

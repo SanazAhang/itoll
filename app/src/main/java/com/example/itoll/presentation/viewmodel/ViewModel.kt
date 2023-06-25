@@ -6,17 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itoll.domain.model.ResultData
-import com.example.itoll.domain.usecase.GetUseCase
+import com.example.itoll.domain.model.UserModel
+import com.example.itoll.domain.usecase.GetUsersUseCase
 import com.example.itoll.presentation.ConsumableValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModel @Inject constructor(private val useCase: GetUseCase) : ViewModel() {
+class ViewModel @Inject constructor(private val userUseCase: GetUsersUseCase) : ViewModel() {
 
-    private val _rocket: MutableLiveData<ConsumableValue<List<String>>> = MutableLiveData()
-    val rocket: LiveData<ConsumableValue<List<String>>> = _rocket
+    private val _Users: MutableLiveData<ConsumableValue<List<UserModel>>> = MutableLiveData()
+    val users: LiveData<ConsumableValue<List<UserModel>>> = _Users
 
 
     private val _loading: MutableLiveData<ConsumableValue<Boolean>> = MutableLiveData()
@@ -33,17 +34,17 @@ class ViewModel @Inject constructor(private val useCase: GetUseCase) : ViewModel
             Log.d("Viewmodel", "Call View Model Get***")
 
             _loading.postValue(ConsumableValue(true))
-            when (val result = useCase.execute(Unit)) {
+            when (val result = userUseCase.execute(Unit)) {
                 is ResultData.Success -> {
-
+                    _Users.postValue(ConsumableValue(result.value))
                 }
 
                 is ResultData.Failure -> {
-
+                    _failure.postValue(ConsumableValue(result.message))
                 }
 
                 is ResultData.Error -> {
-
+                    _error.postValue(ConsumableValue(result.throws))
                 }
             }
 
