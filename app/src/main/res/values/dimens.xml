@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //TextSize
+    <dimen name="font_x_small_12">12sp</dimen>
+    <dimen name="font_small_14">12sp</dimen>
+    <dimen name="font_large_24">24sp</dimen>
+
+    //margin
+
+    <dimen name="margin4dp">4dp</dimen>
+    <dimen name="margin8dp">8dp</dimen>
+    <dimen name="margin16dp">16dp</dimen>
+    <dimen name="margin24dp">24dp</dimen>
+    <dimen name="margin45dp">45dp</dimen>
+
+    //radius
+    <dimen name="corner">16dp</dimen>
+
+
+    //Item
+    <dimen name="itemHeight">80dp</dimen>
+
+    //imageSize
+    <dimen name="imageSize">60dp</dimen>
+
+</resources>

@@ -1,8 +1,8 @@
 package com.example.itoll.di
 
-import com.example.itoll.data.api.Api
-import com.example.itoll.data.rpository.RepositoryImp
-import com.example.itoll.domain.repository.Repository
+import com.example.itoll.data.api.UserApi
+import com.example.itoll.data.rpository.UserRepositoryImp
+import com.example.itoll.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepository(api: Api): Repository {
-        return RepositoryImp(api)
+    fun provideRepository(api: UserApi): UserRepository {
+        return UserRepositoryImp(api)
     }
 }
