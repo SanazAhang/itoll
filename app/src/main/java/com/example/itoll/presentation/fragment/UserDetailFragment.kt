@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.itoll.R
 import com.example.itoll.databinding.FragmentUserDetailBinding
 import com.example.itoll.databinding.FragmentUsersBinding
+import com.example.itoll.domain.model.FunctionName
 import com.example.itoll.domain.model.UserModel
 import com.example.itoll.presentation.ConsumableValue
 import com.example.itoll.presentation.Helper
@@ -47,7 +48,7 @@ class UserDetailFragment : Fragment() {
         return binding.root
     }
 
-    private fun backWebViewButton(){
+    private fun backWebViewButton() {
         binding.backWebViewButton.setOnClickListener {
             if (binding.webView.canGoBack()) {
                 binding.webView.goBack();
@@ -58,19 +59,42 @@ class UserDetailFragment : Fragment() {
     private fun observer() {
         viewModel.user.observe(viewLifecycleOwner, ::onGetUser)
         viewModel.loading.observe(viewLifecycleOwner, ::onLoading)
+        viewModel.failure.observe(viewLifecycleOwner, ::onFailure)
         viewModel.error.observe(viewLifecycleOwner, ::onError)
 
     }
 
+    fun visibility(isVisibleMainViews: Boolean) {
+        if (isVisibleMainViews) {
+            binding.titleUserName.visibility = View.VISIBLE
+            binding.userName.visibility = View.VISIBLE
+            binding.githubTextView.visibility = View.VISIBLE
+            binding.githubTitleTextView.visibility = View.VISIBLE
+            binding.cardView.visibility = View.VISIBLE
+            binding.cardView2.visibility = View.VISIBLE
+            binding.tryagainButton.visibility = View.GONE
+            binding.showErrorTextView.visibility = View.GONE
+        } else {
+            binding.titleUserName.visibility = View.GONE
+            binding.userName.visibility = View.GONE
+            binding.githubTextView.visibility = View.GONE
+            binding.githubTitleTextView.visibility = View.GONE
+            binding.cardView.visibility = View.GONE
+            binding.cardView2.visibility = View.GONE
+            binding.tryagainButton.visibility = View.VISIBLE
+            binding.showErrorTextView.visibility = View.VISIBLE
+        }
+    }
+
     private fun onGetUser(user: UserModel) {
         binding.userName.text = user.login
-
+        visibility(true)
         user.avatar_url?.let { imageUrl ->
             Helper.glideCreator(binding.avatarImageView, imageUrl, requireContext())
         }
-        user.html_url?.let {  githubUrl ->
+        user.html_url?.let { githubUrl ->
             binding.githubTextView.text = githubUrl
-            binding.webView.webViewClient = object :WebViewClient(){
+            binding.webView.webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                     if (url != null) {
                         view?.loadUrl(url)
@@ -102,9 +126,23 @@ class UserDetailFragment : Fragment() {
         }
     }
 
+    private fun onFailure(event: ConsumableValue<String>) {
+        event.consume { errorMessage ->
+            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_LONG).show()
+        }
+    }
+
     private fun onError(event: ConsumableValue<Throwable>) {
         event.consume { ex ->
-            Toast.makeText(requireContext(), ex.message, Toast.LENGTH_SHORT).show()
+            visibility(false)
+            binding.showErrorTextView.text = Helper.asNetworkException(ex)
+        }
+
+        binding.tryagainButton.setOnClickListener {
+            binding.tryagainButton.visibility = View.GONE
+            binding.showErrorTextView.visibility = View.GONE
+
+            viewModel.getUser(args.UserLogin)
         }
     }
 }

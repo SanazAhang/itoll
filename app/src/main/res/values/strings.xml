@@ -6,4 +6,6 @@
     <string name="user_name">User Name :</string>
     <string name="sample">sample</string>
     <string name="github_title">Github Url :</string>
+    <string name="search_hint">Search user that you like</string>
+    <string name="tryAgain">Try Again</string>
 </resources>

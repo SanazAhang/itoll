@@ -25,4 +25,13 @@ class UserRepositoryImp(private val userApi: UserApi) : UserRepository {
         user.mapToModel()
     }
 
+    override suspend fun getUserwithSearch(userName: String): ResultData<List<UserModel>> = execute {
+       userApi.searchUser(userName)
+        }.map {searchUserDto ->
+        searchUserDto.items.map { userDto ->
+            userDto.mapToModel()
+        }
+    }
+
+
 }
