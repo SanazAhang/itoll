@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="titleBold14" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/font_small_14</item>
+        <item name="android:textColor">@color/DarkBlue_200</item>
+    </style>
+
+    <style name="bodyItalic12" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/font_x_small_12</item>
+        <item name="android:textColor">@color/DarkBlue_200</item>
+    </style>
+    <style name="errorBodyItalic12" parent="TextAppearance.AppCompat">
+        <item name="fontFamily">serif</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textSize">@dimen/font_small_14</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+</resources>

@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
+
 }
 
 android {
@@ -27,7 +30,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"https://api.spacexdata.com/v3/\"")
+            buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
         }
 
 
@@ -41,6 +44,7 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -74,5 +78,8 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:2.6.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.6.0"
 
+    //glide
+    implementation "com.github.bumptech.glide:glide:4.12.0"
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
 
 }

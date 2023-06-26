@@ -1,7 +1,7 @@
 package com.example.itoll.di
 
-import com.example.itoll.domain.repository.Repository
-import com.example.itoll.domain.usecase.GetUseCase
+import com.example.itoll.domain.repository.UserRepository
+import com.example.itoll.domain.usecase.GetUsersUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,6 +15,6 @@ class UseCaseModule {
 
     @Provides
     @Singleton
-    fun getUseCase(repository: Repository): GetUseCase =
-        GetUseCase(repository)
+    fun getUseCase(userRepository: UserRepository): GetUsersUseCase =
+        GetUsersUseCase(userRepository)
 }
