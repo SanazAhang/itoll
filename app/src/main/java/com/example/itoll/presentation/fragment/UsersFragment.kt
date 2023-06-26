@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itoll.databinding.FragmentUsersBinding
@@ -23,12 +24,19 @@ class UsersFragment : Fragment() {
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: UserAdapter
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getUsers()
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding =
             FragmentUsersBinding.inflate(LayoutInflater.from(requireContext()), container, false)
+
         return binding.root
     }
 
@@ -36,7 +44,6 @@ class UsersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.userRecyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        viewModel.getData()
         observer()
     }
 
@@ -48,14 +55,22 @@ class UsersFragment : Fragment() {
     }
 
 
-    private fun onGetUser(event: ConsumableValue<List<UserModel>>) {
-        event.consume { users ->
-            adapter = UserAdapter(users) {
-                val data = it.login
+    private fun onGetUser(users: List<UserModel>) {
+
+            adapter = UserAdapter(users) { user ->
+                val data = user.login
+
                 Toast.makeText(requireContext(), data, Toast.LENGTH_SHORT).show()
+
+                if (user.login != null ){
+                    val action = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(user.login)
+                    findNavController().navigate(action)
+                }else{
+                    Toast.makeText(requireContext(),"This UserHas no UserName", Toast.LENGTH_SHORT).show()
+                }
+
             }
             recyclerView.adapter = adapter
-        }
     }
 
     private fun onLoading(event: ConsumableValue<Boolean>) {

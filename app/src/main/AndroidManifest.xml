@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="false"
-        android:theme="@style/Theme.Itoll"
+        android:theme="@style/Base.Theme.Itoll"
         tools:targetApi="31">
         <activity
             android:name=".presentation.MainActivity"

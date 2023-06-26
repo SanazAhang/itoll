@@ -23,4 +23,9 @@
     //imageSize
     <dimen name="imageSize">60dp</dimen>
 
+    //ButtonSize
+    <dimen name="widthButtonSize">60dp</dimen>
+    <dimen name="heightButtonSize">40dp</dimen>
+
+
 </resources>
