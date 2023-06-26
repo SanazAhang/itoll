@@ -10,7 +10,7 @@
         android:layout_height="@dimen/itemHeight"
         android:layout_marginHorizontal="@dimen/margin8dp"
         android:layout_marginVertical="@dimen/margin8dp"
-        android:background="@color/gray"
+        android:backgroundTint="@color/gray"
         app:cardCornerRadius="@dimen/corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

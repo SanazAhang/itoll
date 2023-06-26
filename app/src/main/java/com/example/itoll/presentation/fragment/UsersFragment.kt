@@ -1,6 +1,7 @@
 package com.example.itoll.presentation.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +16,14 @@ import com.example.itoll.domain.model.UserModel
 import com.example.itoll.presentation.ConsumableValue
 import com.example.itoll.presentation.viewmodel.ViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import android.widget.SearchView
 
 @AndroidEntryPoint
 class UsersFragment : Fragment() {
 
-    lateinit var binding: FragmentUsersBinding
     private val viewModel: ViewModel by viewModels()
+
+    lateinit var binding: FragmentUsersBinding
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: UserAdapter
 
@@ -34,9 +37,8 @@ class UsersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            FragmentUsersBinding.inflate(LayoutInflater.from(requireContext()), container, false)
-
+        binding = FragmentUsersBinding.inflate(LayoutInflater.from(requireContext()), container, false)
+        search()
         return binding.root
     }
 
@@ -79,10 +81,12 @@ class UsersFragment : Fragment() {
             when (isLoading) {
                 true -> {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.searchView.visibility = View.GONE
                 }
 
                 false -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.searchView.visibility =  View.VISIBLE
                 }
             }
         }
@@ -92,5 +96,28 @@ class UsersFragment : Fragment() {
         event.consume { ex ->
             Toast.makeText(requireContext(), ex.message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun search(){
+        binding.searchView.setOnQueryTextListener(object :SearchView.OnQueryTextListener,
+            View.OnClickListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                Log.e("Search",p0!!)
+                return false
+            }
+
+            override fun onQueryTextChange(text: String?): Boolean {
+                Log.e("Search","Hellloooooo")
+
+                return true
+            }
+
+            override fun onClick(p0: View?) {
+                Log.e("Search","CLICKKKKKKK")
+
+
+            }
+
+        })
     }
 }
