@@ -1,12 +1,12 @@
 package com.example.itoll.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itoll.domain.model.ResultData
 import com.example.itoll.domain.model.UserModel
+import com.example.itoll.domain.usecase.GetUserWithUserNameUseCase
 import com.example.itoll.domain.usecase.GetUsersUseCase
 import com.example.itoll.presentation.ConsumableValue
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,10 +14,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModel @Inject constructor(private val userUseCase: GetUsersUseCase) : ViewModel() {
+class ViewModel @Inject constructor(
+    private val getUserUseCase: GetUsersUseCase,
+    private val getUserWithUserNameUseCase: GetUserWithUserNameUseCase
+) : ViewModel() {
 
-    private val _Users: MutableLiveData<ConsumableValue<List<UserModel>>> = MutableLiveData()
-    val users: LiveData<ConsumableValue<List<UserModel>>> = _Users
+    private val _users: MutableLiveData<List<UserModel>> = MutableLiveData()
+    val users: LiveData<List<UserModel>> = _users
+
+    private val _user: MutableLiveData<UserModel> = MutableLiveData()
+    val user: LiveData<UserModel> = _user
 
 
     private val _loading: MutableLiveData<ConsumableValue<Boolean>> = MutableLiveData()
@@ -29,14 +35,16 @@ class ViewModel @Inject constructor(private val userUseCase: GetUsersUseCase) : 
     private var _error: MutableLiveData<ConsumableValue<Throwable>> = MutableLiveData()
     val error: LiveData<ConsumableValue<Throwable>> = _error
 
-    fun getData() {
+    fun getUsers() {
         viewModelScope.launch {
-            Log.d("Viewmodel", "Call View Model Get***")
-
             _loading.postValue(ConsumableValue(true))
-            when (val result = userUseCase.execute(Unit)) {
+
+            when (val result = getUserUseCase.execute(Unit)) {
                 is ResultData.Success -> {
-                    _Users.postValue(ConsumableValue(result.value))
+                    result.value.let {
+
+                        _users.postValue(it)
+                    }
                 }
 
                 is ResultData.Failure -> {
@@ -50,6 +58,30 @@ class ViewModel @Inject constructor(private val userUseCase: GetUsersUseCase) : 
 
             _loading.postValue(ConsumableValue(false))
 
+        }
+    }
+
+    fun getUser(userName: String) {
+        viewModelScope.launch {
+            _loading.postValue(ConsumableValue(true))
+
+            when (val result = getUserWithUserNameUseCase.execute(userName)) {
+                is ResultData.Success -> {
+                    result.value.let {
+                        _user.postValue(it)
+                    }
+                }
+
+                is ResultData.Failure -> {
+                    _failure.postValue(ConsumableValue(result.message))
+                }
+
+                is ResultData.Error -> {
+                    _error.postValue(ConsumableValue(result.throws))
+                }
+            }
+
+            _loading.postValue(ConsumableValue(false))
         }
     }
 }

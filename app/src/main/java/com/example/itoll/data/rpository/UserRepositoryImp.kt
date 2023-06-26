@@ -19,4 +19,10 @@ class UserRepositoryImp(private val userApi: UserApi) : UserRepository {
         }
     }
 
+    override suspend fun getUser(userName: String): ResultData<UserModel> = execute {
+        userApi.getUser(userName)
+    }.map { user ->
+        user.mapToModel()
+    }
+
 }

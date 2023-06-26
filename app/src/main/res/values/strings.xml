@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_title">GitHub Users</string>
     <string name="user_name">User Name :</string>
+    <string name="sample">sample</string>
+    <string name="github_title">Github Url :</string>
 </resources>
