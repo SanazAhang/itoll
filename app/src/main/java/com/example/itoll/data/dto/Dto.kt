@@ -20,3 +20,7 @@ data class UserDto(
    val type :String?,
    val site_admin :Boolean?
 )
+
+data class SearchUserDto(
+   val items :List<UserDto>
+)

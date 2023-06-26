@@ -15,7 +15,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminateTint="@color/orange"
+        />
 
 
     <androidx.cardview.widget.CardView
@@ -27,7 +29,9 @@
         app:cardCornerRadius="@dimen/corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -55,6 +59,7 @@
         app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
         style="@style/titleBold14"
+        android:visibility="gone"
         />
 
     <TextView
@@ -67,6 +72,7 @@
         app:layout_constraintTop_toTopOf="@+id/title_user_name"
         app:layout_constraintBottom_toBottomOf="@id/title_user_name"
         style="@style/titleBold14"
+        android:visibility="gone"
         />
 
 
@@ -79,6 +85,7 @@
         app:layout_constraintStart_toStartOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/title_user_name"
         style="@style/titleBold14"
+        android:visibility="gone"
         />
 
     <TextView
@@ -93,6 +100,7 @@
         app:layout_constraintTop_toTopOf="@+id/github_title_text_view"
         android:layout_marginRight="@dimen/margin8dp"
         style="@style/titleBold14"
+        android:visibility="gone"
         />
 
 
@@ -107,6 +115,7 @@
         android:layout_marginHorizontal="@dimen/margin16dp"
         android:layout_marginVertical="@dimen/margin16dp"
         app:cardCornerRadius="@dimen/corner"
+        android:visibility="gone"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -136,4 +145,26 @@
     </androidx.cardview.widget.CardView>
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tryagain_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/tryAgain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/show_error_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/errorBodyItalic12"
+        android:layout_marginBottom="@dimen/margin8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tryagain_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
