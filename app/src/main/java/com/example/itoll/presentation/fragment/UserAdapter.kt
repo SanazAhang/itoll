@@ -38,5 +38,9 @@ class UserAdapter(val users: List<UserModel>, val onClick: (UserModel) -> Unit) 
     }
 
 
+
+
+
+
     inner class ViewHolder(val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root)
 }
